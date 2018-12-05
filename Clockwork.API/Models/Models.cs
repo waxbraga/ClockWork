@@ -6,6 +6,7 @@ namespace Clockwork.API.Models
     public class ClockworkContext : DbContext
     {
         public DbSet<CurrentTimeQuery> CurrentTimeQueries { get; set; }
+        public DbSet<TimezoneQuery> TimezoneQueries { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,4 +21,14 @@ namespace Clockwork.API.Models
         public string ClientIp { get; set; }
         public DateTime UTCTime { get; set; }
     }
+
+
+    public class TimezoneQuery
+    {
+        public int TimezoneQueryId { get; set; }
+        public DateTime Time { get; set; }
+        public string Timezone { get; set; }
+        public DateTime ConvertedTime { get; set; }
+    }
+
 }

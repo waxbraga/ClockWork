@@ -1,21 +1,52 @@
-﻿<script>
-function UserAction() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("output").innerHTML = this.responseText;
-        }
-    };
-    xhttp.open("GET", "http://127.0.0.1:5000/api/currenttime", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send();
+﻿
 
-}
+@model Clockwork.Web.Models.HomeModel
+<div class="container" id="tableQueries">
+    <div class="row">
+        <div class="hdr col-sm-3">Server time</div>
+        <div class="hdr col-sm-3">Client IP Address</div>
+        <div class="hdr col-sm-3">UTC Time</div>
+    </div>
+    @foreach (var ee in Model.CurrentTimeQueries)
+    {
+        <div class="row">
+            <div class="col col-sm-3">
+                @ee.Time
+            </div>
+            <div class="col col-sm-3">
+                @ee.ClientIp
+            </div>
+            <div class="col col-sm-3">
+                @ee.UTCTime
+            </div>
+        </div>
+    }
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-offset-4 col-sm-4">
+        <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg">Get the time</button>
+    </div>
+    <div class="col-sm-4"></div>
+</div>
+
+<script>
+    $('#btnSubmit').click(function () {
+        var urlNew = "http://127.0.0.1:5000/api/currenttime/new";
+
+        $.getJSON(urlNew, function (requestData){
+
+            var strFormat = "DD/MM/YYYY h:mm:ss A";
+
+            var contentStr = '<div class="row">';
+            contentStr += '<div class="col col-sm-3">' + moment(requestData.time).format(strFormat) + '</div>';
+            contentStr += '<div class="col col-sm-3">' + requestData.clientIp + '</div>';
+            contentStr += '<div class="col col-sm-3">' + moment.utc(requestData.utcTime).format(strFormat) + '</div>';
+            contentStr += '</div>';
+
+            $('#tableQueries').append(contentStr)
+        });
+
+    });
+
 </script>
-
-<h2>AWH Clockwork Project @ViewData["Version"] on @ViewData["Runtime"]!</h2>
-
-
-<button type="submit" onclick="UserAction()">Get the time</button>
-
-<p id="output"></p>

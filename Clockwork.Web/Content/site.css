@@ -1,0 +1,22 @@
+﻿
+#tableQueries {
+    margin-bottom: 10px;
+}
+
+.row .col {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 1px solid #ddd;
+    border: 1px solid rgba(86,61,124,.2);
+}
+
+.row .hdr {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #eee;
+    border: 1px solid #ddd;
+}
+
+hr {
+    margin-top: 40px;
+}
